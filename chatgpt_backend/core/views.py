@@ -3,28 +3,36 @@ from rest_framework.response import Response
 import openai
 import os
 
-from .models import Message
+from .models import Chat, Message
 from .serializers import (
     ChatMessageSerializer,
     ChatResponseSerializer,
     MessageSerializer,
+    ChatSerializer,
 )
 
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 class ChatGPT(APIView):
     def post(self, request, format=None):
+        # POST method for sending a message
         serializer = ChatMessageSerializer(data=request.data)
         if serializer.is_valid():
             request_message = serializer.validated_data['message']
+            chat_id = serializer.validated_data.get('chat_id', None)
 
-            user_message_obj = Message(content=request_message, is_user=True)
+            if chat_id:
+                chat = Chat.objects.get(id=chat_id)
+            else:
+                chat = Chat.objects.create()
+
+            user_message_obj = Message(content=request_message, role=Message.RoleChoices.USER, chat=chat)
             user_message_obj.save()
 
-            messages = Message.objects.filter().order_by('timestamp')
+            messages = Message.objects.filter(chat=chat).order_by('timestamp')
             message_list = []
             for message in messages:
-                role = "user" if message.is_user else "assistant"
+                role = message.role
                 message_list.append({"role": role, "content": message.content})
 
             message_list.append({"role": "user", "content": request_message})
@@ -36,7 +44,7 @@ class ChatGPT(APIView):
 
             ai_message = response.choices[0].message['content'].strip()
 
-            ai_message_obj = Message(content=ai_message, is_user=False)
+            ai_message_obj = Message(content=ai_message, role=Message.RoleChoices.ASSISTANT, chat=chat)
             ai_message_obj.save()
 
             response_serializer = ChatResponseSerializer(data={"message": ai_message})
@@ -45,8 +53,15 @@ class ChatGPT(APIView):
 
         return Response(serializer.errors, status=400)
 
-class ChatHistory(APIView):
-    def get(self, request, format=None):
-        messages = Message.objects.all().order_by('timestamp')
-        serializer = MessageSerializer(messages, many=True)
-        return Response(serializer.data)
+    def get(self, request, chat_id=None, format=None):
+        if chat_id:
+            # GET method for fetching messages in a chat
+            chat = Chat.objects.get(pk=chat_id)
+            messages = Message.objects.filter(chat=chat).order_by('timestamp')
+            serializer = MessageSerializer(messages, many=True)
+            return Response(serializer.data)
+        else:
+            # GET method for fetching all chats
+            chats = Chat.objects.all().order_by('-created_at')
+            serializer = ChatSerializer(chats, many=True)
+            return Response(serializer.data)
