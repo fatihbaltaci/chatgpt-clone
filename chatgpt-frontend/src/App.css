@@ -1,0 +1,82 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  background-color: #e5ddd5;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  overflow-y: auto;
+  height: 80vh;
+}
+
+.chat-message {
+  max-width: 80%;
+  padding: 8px 16px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  word-wrap: break-word;
+}
+
+.user-message {
+  background-color: #dcf8c6;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+.ai-message {
+  background-color: #ffffff;
+  align-self: flex-start;
+  margin-right: auto;
+}
+
+.message-content {
+  display: inline-block;
+}
+
+form {
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+}
+
+input {
+  flex-grow: 1;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid #cccccc;
+  outline: none;
+}
+
+button {
+  background-color: #009688;
+  color: #ffffff;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  margin-left: 8px;
+  cursor: pointer;
+  outline: none;
+  }
+  
+  button:hover {
+  background-color: #00695c;
+  }
+
+  textarea {
+    flex-grow: 1;
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    outline: none;
+    resize: none; /* Optional: to disable resizing the textarea */
+  }
