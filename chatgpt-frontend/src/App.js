@@ -4,12 +4,14 @@ import './App.css';
 function App() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const [chats, setChats] = useState([]);
+  const [selectedChat, setSelectedChat] = useState(null);
 
   useEffect(() => {
-    fetchChatHistory();
+    fetchChats();
   }, []);
 
-  const fetchChatHistory = async () => {
+  const fetchChats = async () => {
     const response = await fetch('http://localhost:8090/api/chat_history/', {
       method: 'GET',
       headers: {
@@ -17,12 +19,34 @@ function App() {
       },
     });
 
-    const chatHistory = await response.json();
-    const formattedHistory = chatHistory.map((msg) => ({
-      type: msg.is_user ? 'user' : 'ai',
+    const fetchedChats = await response.json();
+    setChats(fetchedChats);
+  };
+
+  const fetchChatMessages = async (chatId) => {
+    const response = await fetch(`http://localhost:8090/api/chat_messages/${chatId}/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const chatMessages = await response.json();
+    const formattedMessages = chatMessages.map((msg) => ({
+      type: msg.role,
       content: msg.content,
     }));
-    setMessages(formattedHistory);
+    setMessages(formattedMessages);
+  };
+
+  const selectChat = (chatId) => {
+    setSelectedChat(chatId);
+    fetchChatMessages(chatId);
+  };
+
+  const clearChatDisplay = () => {
+    setMessages([]);
+    setSelectedChat(null);
   };
 
   const submitMessage = async (e) => {
@@ -43,6 +67,7 @@ function App() {
 
     const data = await response.json();
     setMessages((prevMessages) => [...prevMessages, { type: 'ai', content: data.message }]);
+    fetchChats();
   };
 
   const handleKeyDown = (e) => {
@@ -51,18 +76,31 @@ function App() {
     }
   };
 
-
   return (
     <div className="App">
+      <div className="sidebar">
+        <button onClick={clearChatDisplay}>New Chat</button>
+        <div className="chat-history">
+          {chats.map((chat, idx) => (
+            <div key={idx} className="chat-item" onClick={() => selectChat(chat.id)}>
+              Chat {idx + 1}
+            </div>
+          ))}
+        </div>
+      </div>
       <div className="chat-container">
-        {messages.map((msg, idx) => (
-          <div
-            key={idx}
-            className={`chat-message ${msg.type === 'user' ? 'user-message' : 'ai-message'}`}
-          >
-            <span className="message-content">{msg.content}</span>
-          </div>
-        ))}
+        {selectedChat ? (
+          messages.map((msg, idx) => (
+            <div
+              key={idx}
+              className={`chat-message ${msg.type === 'user' ? 'user-message' : 'ai-message'}`}
+            >
+              <span className="message-content">{msg.content}</span>
+            </div>
+          ))
+        ) : (
+          <div className="no-chat-selected">No chat selected</div>
+        )}
       </div>
       <form onSubmit={submitMessage}>
         <textarea
@@ -71,11 +109,11 @@ function App() {
           onKeyDown={handleKeyDown}
           placeholder="Type your message here..."
           rows={3}
-        />
-        <button type="submit">Send</button>
-      </form>
-    </div>
-  );
-}
-
-export default App;
+            />
+            <button type="submit">Send</button>
+          </form>
+        </div>
+        );
+      }
+      
+      export default App;
