@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 import openai
 import os
 
@@ -18,7 +19,7 @@ class ChatGPT(APIView):
         # POST method for sending a message
         serializer = ChatMessageSerializer(data=request.data)
         if serializer.is_valid():
-            request_message = serializer.validated_data['message']
+            request_message = serializer.validated_data.get('message', None)
             chat_id = serializer.validated_data.get('chat_id', None)
 
             if chat_id:
@@ -26,6 +27,10 @@ class ChatGPT(APIView):
             else:
                 chat = Chat.objects.create()
 
+            if not request_message:
+                serializer = ChatSerializer(chat)
+                return Response(serializer.data)
+            
             user_message_obj = Message(content=request_message, role=Message.RoleChoices.USER, chat=chat)
             user_message_obj.save()
 
@@ -49,9 +54,9 @@ class ChatGPT(APIView):
 
             response_serializer = ChatResponseSerializer(data={"message": ai_message})
             if response_serializer.is_valid():
-                return Response(response_serializer.validated_data)
+                return Response({"message": response_serializer.validated_data["message"], "chat_id": chat.id})
 
-        return Response(serializer.errors, status=400)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, chat_id=None, format=None):
         if chat_id:

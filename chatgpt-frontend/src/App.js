@@ -51,11 +51,6 @@ function App() {
   };
 
   const sendMessage = async () => {
-    if (!selectedChatId) {
-      alert("Please select a chat before sending a message.");
-      return;
-    }
-
     // Update the local state before sending the message to the backend
     setMessages([
       ...messages,
@@ -67,36 +62,64 @@ function App() {
     setInputMessage("");
 
     try {
-      await axios.post(`${baseURL}/api/chat/`, {
-        chat_id: selectedChatId,
+      console.log(selectedChatId);
+      const response = await axios.post(`${baseURL}/api/chats/`, {
+        chat_id: selectedChatId || undefined,
         message: inputMessage,
       });
-      fetchMessages(selectedChatId);
+
+      // If there was no selected chat, set the selected chat to the newly created one
+      if (!selectedChatId) {
+        setSelectedChatId(response.data.chat_id);
+      } else {
+        fetchMessages(selectedChatId);
+      }
     } catch (error) {
       console.error("Error sending message:", error);
+    }
+  };
+
+  const createNewChat = async () => {
+    try {
+      const response = await axios.post(`${baseURL}/api/chats/`);
+      const newChat = response.data;
+
+      setChats([newChat, ...chats]);
+      setSelectedChatId(newChat.id);
+    } catch (error) {
+      console.error("Error creating a new chat:", error);
     }
   };
 
   return (
     <div className="App">
       <div className="chat-container">
-        <div className="chat-history">
-          {chats.map((chat) => (
-            <div
-              key={chat.id}
-              onClick={() => setSelectedChatId(chat.id)}
-              className={`chat ${selectedChatId === chat.id ? "selected" : ""}`}
-            >
-              Chat {chat.id}
-            </div>
-          ))}
+        <div className="chat-history-container">
+          <button className="new-chat-button" onClick={createNewChat}>
+            + New Chat
+          </button>
+          <div className="chat-history">
+            {chats.slice(0).map((chat) => (
+              <div
+                key={chat.id}
+                onClick={() => setSelectedChatId(chat.id)}
+                className={`chat ${
+                  selectedChatId === chat.id ? "selected" : ""
+                }`}
+              >
+                Chat {chat.id}
+              </div>
+            ))}
+          </div>
         </div>
         <div className="chat-ui">
           <div className="chat-messages">
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`message ${message.role === "user" ? "user" : "assistant"}`}
+                className={`message ${
+                  message.role === "user" ? "user" : "assistant"
+                }`}
               >
                 {message.content}
               </div>
