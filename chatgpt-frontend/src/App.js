@@ -61,9 +61,9 @@ function App() {
       },
     ]);
     setInputMessage("");
-
+  
     setIsAssistantTyping(true);
-
+  
     try {
       // Simulate a delay for the typewriting effect
       const delay = 1000 + Math.random() * 1000; // Random delay between 1-2 seconds
@@ -72,20 +72,22 @@ function App() {
           chat_id: selectedChatId || undefined,
           message: inputMessage,
         });
-
+  
         // If there was no selected chat, set the selected chat to the newly created one
         if (!selectedChatId) {
           setSelectedChatId(response.data.chat_id);
+          setChats([{ id: response.data.chat_id }, ...chats]);
         } else {
           fetchMessages(selectedChatId);
         }
-
+  
         setIsAssistantTyping(false);
       }, delay);
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
+  
 
   const createNewChat = async () => {
     try {
@@ -120,7 +122,7 @@ function App() {
   return (
     <div className="App">
       <div className="headline">
-        <h1>ChatGPT Clone</h1>
+        <h1>⚡ ChatGPT Clone ⚡</h1>
       </div>
       <div className="chat-container">
         <div className="chat-history-container">
