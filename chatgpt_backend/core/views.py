@@ -16,7 +16,6 @@ openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 class ChatGPT(APIView):
     def post(self, request, format=None):
-        # POST method for sending a message
         serializer = ChatMessageSerializer(data=request.data)
         if serializer.is_valid():
             request_message = serializer.validated_data.get('message', None)
