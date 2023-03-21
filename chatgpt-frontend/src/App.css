@@ -6,6 +6,20 @@
   background-color: #f5f5f5;
 }
 
+.headline {
+  width: 100%;
+  padding: 1rem;
+  color: rgb(25, 24, 24);
+  position: fixed;
+  top: 0;
+  text-align: center;
+}
+
+.headline h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
 .chat-container {
   display: flex;
   width: 80%;
@@ -28,6 +42,7 @@
   border: none;
   padding: 1rem 1rem;
   cursor: pointer;
+  font-size: 1.2rem;
   width: 100%;
 }
 
@@ -107,4 +122,69 @@
 .chat-input button:disabled {
   background-color: #ddd;
   cursor: not-allowed;
+}
+
+.chat-input textarea {
+  flex: 1;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: inherit;
+  line-height: 1.5rem;
+  font-family: inherit;
+}
+.code-block {
+  display: block;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  padding: 1rem;
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+
+.inline-code {
+  background-color: rgb(68, 71, 74);
+  font-weight: 800;
+  color: rgb(210, 143, 67);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-family: monospace;
+}
+@keyframes dotPulse {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.typing-indicator .dot {
+  background-color: #000;
+  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+  margin: 0 3px;
+  animation: dotPulse 1s ease-in-out infinite;
+}
+
+.typing-indicator .dot:nth-child(1) {
+  animation-delay: -0.2s;
+}
+
+.typing-indicator .dot:nth-child(2) {
+  animation-delay: 0;
+}
+
+.typing-indicator .dot:nth-child(3) {
+  animation-delay: 0.2s;
 }

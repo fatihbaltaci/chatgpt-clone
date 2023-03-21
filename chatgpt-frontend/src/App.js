@@ -11,6 +11,7 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const messagesEndRef = useRef(null);
+  const [isAssistantTyping, setIsAssistantTyping] = useState(false);
 
   useEffect(() => {
     fetchChats();
@@ -61,19 +62,26 @@ function App() {
     ]);
     setInputMessage("");
 
-    try {
-      console.log(selectedChatId);
-      const response = await axios.post(`${baseURL}/api/chats/`, {
-        chat_id: selectedChatId || undefined,
-        message: inputMessage,
-      });
+    setIsAssistantTyping(true);
 
-      // If there was no selected chat, set the selected chat to the newly created one
-      if (!selectedChatId) {
-        setSelectedChatId(response.data.chat_id);
-      } else {
-        fetchMessages(selectedChatId);
-      }
+    try {
+      // Simulate a delay for the typewriting effect
+      const delay = 1000 + Math.random() * 1000; // Random delay between 1-2 seconds
+      setTimeout(async () => {
+        const response = await axios.post(`${baseURL}/api/chats/`, {
+          chat_id: selectedChatId || undefined,
+          message: inputMessage,
+        });
+
+        // If there was no selected chat, set the selected chat to the newly created one
+        if (!selectedChatId) {
+          setSelectedChatId(response.data.chat_id);
+        } else {
+          fetchMessages(selectedChatId);
+        }
+
+        setIsAssistantTyping(false);
+      }, delay);
     } catch (error) {
       console.error("Error sending message:", error);
     }
@@ -91,8 +99,29 @@ function App() {
     }
   };
 
+  function formatMessageContent(content) {
+    const sections = content.split(/(```[\s\S]*?```|`[\s\S]*?`)/g);
+    return sections
+      .map((section) => {
+        if (section.startsWith("```") && section.endsWith("```")) {
+          section = section.split("\n").slice(1).join("\n");
+          const code = section.substring(0, section.length - 3);
+          return `<pre><code class="code-block">${code}</code></pre>`;
+        } else if (section.startsWith("`") && section.endsWith("`")) {
+          const code = section.substring(1, section.length - 1);
+          return `<code class="inline-code">${code}</code>`;
+        } else {
+          return section.replace(/\n/g, "<br>");
+        }
+      })
+      .join("");
+  }
+
   return (
     <div className="App">
+      <div className="headline">
+        <h1>ChatGPT Clone</h1>
+      </div>
       <div className="chat-container">
         <div className="chat-history-container">
           <button className="new-chat-button" onClick={createNewChat}>
@@ -107,7 +136,7 @@ function App() {
                   selectedChatId === chat.id ? "selected" : ""
                 }`}
               >
-                Chat {chat.id}
+                Chat: {chat.id}
               </div>
             ))}
           </div>
@@ -120,19 +149,36 @@ function App() {
                 className={`message ${
                   message.role === "user" ? "user" : "assistant"
                 }`}
-              >
-                {message.content}
-              </div>
+                dangerouslySetInnerHTML={{
+                  __html: formatMessageContent(message.content),
+                }}
+              />
             ))}
+            {isAssistantTyping && (
+              <div className="message assistant">
+                <div className="typing-indicator">
+                  <span className="dot"></span>
+                  <span className="dot"></span>
+                  <span className="dot"></span>
+                </div>
+              </div>
+            )}
+
             <div ref={messagesEndRef}></div>
           </div>
           <div className="chat-input">
-            <input
-              type="text"
+            <textarea
               placeholder="Type a message"
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.keyCode === 13 && !e.shiftKey) {
+                  e.preventDefault();
+                  sendMessage();
+                }
+              }}
             />
+
             <button onClick={sendMessage} disabled={!inputMessage}>
               Send
             </button>
