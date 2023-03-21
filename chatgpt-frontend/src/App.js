@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-
 import axios from "axios";
+
 import "./App.css";
+import ChatHistory from "./components/ChatHistory";
+import ChatUI from "./components/ChatUI";
 
 const baseURL = "http://localhost:8090";
 
 function App() {
+ 
+
   const [chats, setChats] = useState([]);
   const [selectedChatId, setSelectedChatId] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -129,63 +133,21 @@ function App() {
           <button className="new-chat-button" onClick={createNewChat}>
             + New Chat
           </button>
-          <div className="chat-history">
-            {chats.slice(0).map((chat) => (
-              <div
-                key={chat.id}
-                onClick={() => setSelectedChatId(chat.id)}
-                className={`chat ${
-                  selectedChatId === chat.id ? "selected" : ""
-                }`}
-              >
-                Chat: {chat.id}
-              </div>
-            ))}
-          </div>
+          <ChatHistory
+            chats={chats}
+            selectedChatId={selectedChatId}
+            setSelectedChatId={setSelectedChatId}
+          />
         </div>
-        <div className="chat-ui">
-          <div className="chat-messages">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`message ${
-                  message.role === "user" ? "user" : "assistant"
-                }`}
-                dangerouslySetInnerHTML={{
-                  __html: formatMessageContent(message.content),
-                }}
-              />
-            ))}
-            {isAssistantTyping && (
-              <div className="message assistant">
-                <div className="typing-indicator">
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                </div>
-              </div>
-            )}
-
-            <div ref={messagesEndRef}></div>
-          </div>
-          <div className="chat-input">
-            <textarea
-              placeholder="Type a message"
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.keyCode === 13 && !e.shiftKey) {
-                  e.preventDefault();
-                  sendMessage();
-                }
-              }}
-            />
-
-            <button onClick={sendMessage} disabled={!inputMessage}>
-              Send
-            </button>
-          </div>
-        </div>
+        <ChatUI
+          messages={messages}
+          inputMessage={inputMessage}
+          setInputMessage={setInputMessage}
+          sendMessage={sendMessage}
+          formatMessageContent={formatMessageContent}
+          isAssistantTyping={isAssistantTyping}
+          messagesEndRef={messagesEndRef}
+        />
       </div>
     </div>
   );
