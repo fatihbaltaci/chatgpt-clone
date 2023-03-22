@@ -2,23 +2,32 @@
 
 ChatGPT Clone: Self Hosted, Full-Stack Conversational AI Platform powered by React, Django REST Framework, and PostgreSQL and OpenAI's GPT-3.5 API.
 
-## Prerequisites
+## Features
+
+- **Self Hosted**: You can host the project on your own server or local machine. All the data and OpenAI API Key are stored on your server.
+- **Full-Stack**: The project is a full-stack project that includes a React frontend, Django REST Framework backend, and PostgreSQL database.
+- **Conversational AI**: The project uses OpenAI's GPT-3.5 API to generate responses to user inputs.
+- **Docker Compose**: The project uses Docker Compose to run the project in containers.
+- **Django Admin Panel**: The project includes a Django Admin Panel to manage the project.
+
+
+## Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [OpenAI API Key](https://platform.openai.com/account/api-keys)
 
-## Quick Start
+## Quick Start
 
-You can quickly set up the project by running the following command. This script ask you for your OpenAI API Key. Your OpenAI API Key is only stored in your `.envs/.env` file and is never sent to any other server. Please check the [scripts/install.sh](scripts/install.sh) file to see what it does.
+You can quickly deploy ChatGPT Clone by running the following command. This script ask you for your OpenAI API Key. Your OpenAI API Key is only stored in your `.envs/.env` file and is never sent to any other server. Please check the [install.sh](./install.sh) file to see what it does.
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/fatihbaltaci/chatgpt-clone/main/scripts/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/fatihbaltaci/chatgpt-clone/main/install.sh | bash
 ```
 
-## Installation
+## Installation
 
-### Clone the Repository
+### Clone the Repository
 
 ```bash
 git clone https://github.com/fatihbaltaci/chatgpt-clone.git
@@ -36,11 +45,11 @@ docker-compose build
 docker-compose up -d
 ```
 
-### Access the Project
+### Access the Project
 
 The project will be available at http://localhost:3090/
 
-### Access the Django Admin Panel
+### Access the Django Admin Panel
 
 The admin panel will be available at http://localhost:3090/admin/ and you can login with the superuser credentials you set in the [.envs/.env](.envs/.env) file.
 
@@ -53,7 +62,7 @@ docker-compose down
 docker volume rm chatgpt-clone_chatgpt-postgres-data
 ```
 
-## Development
+## Development
 
 If you want to contribute to this project, you can follow the instructions below to set up a development environment.
 ## Backend
@@ -95,7 +104,7 @@ cd chatgpt_backend
 
 To access Django Admin, go to http://localhost:8090/admin/ and login with the superuser credentials you set in the [.env.dev](.envs/.env.dev) file
 
-### Access the Database Shell
+### Access the Database Shell
 
 Sometimes you may want to access the Django database shell. You can do so by running the following command:
 
