@@ -57,11 +57,17 @@ The admin panel will be available at http://localhost:3090/admin/ and you can lo
 
 ### 🧹 Clean Up
 
-```bash
-docker-compose down
+If you installed the project using the [install.sh](./install.sh) script, you must first change the directory to the `$HOME/chatgpt-clone` directory before running the commands below.
 
-# Delete Postgres Volume (Warning: This will delete all data in the database)
-docker volume rm chatgpt-clone_chatgpt-postgres-data
+```bash
+cd $HOME/chatgpt-clone
+docker-compose down
+```
+
+(Optional) Delete Postgres Volume (Warning: This will delete all data in the database)
+
+```bash
+docker volume rm chatgpt-clone_postgres
 ```
 
 ## 🛠 Development

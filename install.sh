@@ -51,7 +51,7 @@ ENV_FILE=".envs/.env"
 # Check if OPENAI_API_KEY is set
 OPENAI_API_KEY_SET=false
 if grep -q "OPENAI_API_KEY=" "$ENV_FILE"; then
-  echo "⚠️ OPENAI_API_KEY is already set in the $ENV_FILE file: $(grep "OPENAI_API_KEY=" "$ENV_FILE" | cut -d '=' -f 2)"
+  echo "📌 OPENAI_API_KEY is already set in the $ENV_FILE file: $(grep "OPENAI_API_KEY=" "$ENV_FILE" | cut -d '=' -f 2)"
   read -p "Do you want to update the OPENAI_API_KEY? [Y/n]: " update_answer
   update_answer=${update_answer:-Y}
   if [[ $update_answer =~ ^[Yy]$ ]]; then
@@ -75,8 +75,21 @@ fi
 
 # Build and run the project
 echo "🛠 Building the project..."
-$COMPOSE_COMMAND -f "$REPO_DIR/docker-compose.yml" build
+$COMPOSE_COMMAND -f "$REPO_DIR/docker-compose.yml" build >/dev/null 2>&1
 echo "🚀 Deploying ChatGPT-clone..."
 $COMPOSE_COMMAND -f "$REPO_DIR/docker-compose.yml" up -d
 echo "✅ ChatGPT-clone installation complete! 🎉"
 echo "📁 Installation directory: $REPO_DIR"
+echo "🌐 Open http://localhost:8091 in your browser to access the application."
+
+# Open browser to access the project
+echo "🌐 Opening the project in your browser..."
+if command -v open >/dev/null 2>&1; then
+  open "http://localhost:8091" >/dev/null 2>&1
+elif command -v xdg-open >/dev/null 2>&1; then
+  xdg-open "http://localhost:8091" >/dev/null 2>&1
+elif command -v gnome-open >/dev/null 2>&1; then
+  gnome-open "http://localhost:8091" >/dev/null 2>&1
+elif command -v kde-open >/dev/null 2>&1; then
+  kde-open "http://localhost:8091" >/dev/null 2>&1
+fi
