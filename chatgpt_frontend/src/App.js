@@ -63,32 +63,44 @@ function App() {
       },
     ]);
     setInputMessage("");
-
+  
     setIsAssistantTyping(true);
-
+  
     try {
       // Simulate a delay for the typewriting effect
       const delay = 1000 + Math.random() * 1000; // Random delay between 1-2 seconds
       setTimeout(async () => {
-        const response = await axios.post(`${baseURL}/api/chats/`, {
-          chat_id: selectedChatId || undefined,
-          message: inputMessage,
-        });
-
-        // If there was no selected chat, set the selected chat to the newly created one
-        if (!selectedChatId) {
-          setSelectedChatId(response.data.chat_id);
-          setChats([{ id: response.data.chat_id }, ...chats]);
-        } else {
-          fetchMessages(selectedChatId);
+        try {
+          const response = await axios.post(`${baseURL}/api/chats/`, {
+            chat_id: selectedChatId || undefined,
+            message: inputMessage,
+          });
+  
+          // If there was no selected chat, set the selected chat to the newly created one
+          if (!selectedChatId) {
+            setSelectedChatId(response.data.chat_id);
+            setChats([{ id: response.data.chat_id }, ...chats]);
+          } else {
+            fetchMessages(selectedChatId);
+          }
+        } catch (error) {
+          console.error("Error sending message:", error);
+          setMessages([
+            ...messages,
+            {
+              content: "⚠️ An error occurred while sending the message. Please make sure the backend is running and OPENAI_API_KEY is set in the .env file.",
+              role: "assistant",
+            },
+          ]);
+        } finally {
+          setIsAssistantTyping(false);
         }
-
-        setIsAssistantTyping(false);
       }, delay);
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
+  
 
   const createNewChat = async () => {
     try {

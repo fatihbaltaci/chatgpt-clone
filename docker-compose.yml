@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./chatgpt_frontend
+      dockerfile: Dockerfile
+    ports:
+      - '8091:80'
+    depends_on:
+      - backend
+    networks:
+      - chatgpt-network
+
+  backend:
+    build:
+      context: ./chatgpt_backend
+      dockerfile: Dockerfile
+    ports:
+      - '8090:8090'
+    depends_on:
+      - db
+    env_file:
+      - .envs/.env
+    command: >
+      bash -c "python manage.py makemigrations &&
+               python manage.py migrate &&
+               gunicorn --bind 0.0.0.0:8090 chatgpt_backend.wsgi:application"
+    networks:
+      - chatgpt-network
+
+  db:
+    image: postgres:13.6
+    env_file:
+      - .envs/.env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - chatgpt-network
+
+networks:
+  chatgpt-network:
+    driver: bridge
+
+volumes:
+  postgres:

@@ -10,16 +10,19 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from pathlib import Path
-from decouple import config
 
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = config('DEBUG', default=False, cast=bool)
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-_6fm0c_&b3pg(h9@xwc+3h7dfv-m0o*ili$@xh=vgfy+ovusf*')
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*', cast=lambda v: [s.strip() for s in v.split(',')])
+SECRET_KEY = config(
+    'SECRET_KEY', default='django-insecure-_6fm0c_&b3pg(h9@xwc+3h7dfv-m0o*ili$@xh=vgfy+ovusf*')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*',
+                       cast=lambda v: [s.strip() for s in v.split(',')])
 
 # Application definition
 
@@ -31,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    "django_extensions",
     "rest_framework",
     'corsheaders',
     'core.apps.CoreConfig',
@@ -39,6 +43,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -108,8 +113,6 @@ LOGGING = {
 }
 
 
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -145,6 +148,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

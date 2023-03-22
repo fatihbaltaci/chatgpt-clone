@@ -89,7 +89,7 @@
 }
 
 .message.assistant {
-  background-color: #FFF;
+  background-color: #dfdddd;
   color: #000;
   align-self: flex-start;
   border-radius: 7px 7px 7px 0;
@@ -111,11 +111,11 @@
 
 .chat-input button {
   margin-left: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 1rem 2rem;
   background-color: #0dcaf0;
   color: white;
   border: none;
-  border-radius: 2rem;
+  border-radius: 1.2rem;
   cursor: pointer;
 }
 
