@@ -21,11 +21,13 @@ ChatGPT Clone: Self Hosted, Full-Stack Conversational AI Platform powered by Rea
 
 You can quickly deploy ChatGPT Clone by running the following command. This script ask you for your OpenAI API Key. Your OpenAI API Key is only stored in your `.envs/.env` file and is never sent to any other server. Please check the [install.sh](./install.sh) file to see what it does.
 
+This script clones the project to your `$HOME` directory, updates the `.envs/.env` file with your OpenAI API Key, and runs the project in Docker Compose.
+
 ```bash
 curl -sSL https://raw.githubusercontent.com/fatihbaltaci/chatgpt-clone/main/install.sh | bash
 ```
 
-## Installation
+## 🔧 Installation
 
 ### Clone the Repository
 
@@ -38,22 +40,22 @@ cd chatgpt-clone
 
 Update the `OPENAI_API_KEY` key in the [.envs/.env](.envs/.env) file with your OpenAI API Key. You can also update the other environment variables in this file.
 
-### Run the Project
+### 🚀 Run the Project
 
 ```bash
 docker-compose build
 docker-compose up -d
 ```
 
-### Access the Project
+### 🌐 Access the Project
 
 The project will be available at http://localhost:3090/
 
-### Access the Django Admin Panel
+### 🧐 Access the Django Admin Panel
 
 The admin panel will be available at http://localhost:3090/admin/ and you can login with the superuser credentials you set in the [.envs/.env](.envs/.env) file.
 
-### Clean Up
+### 🧹 Clean Up
 
 ```bash
 docker-compose down
@@ -62,7 +64,7 @@ docker-compose down
 docker volume rm chatgpt-clone_chatgpt-postgres-data
 ```
 
-## Development
+## 🛠 Development
 
 If you want to contribute to this project, you can follow the instructions below to set up a development environment.
 ## Backend
@@ -104,7 +106,7 @@ cd chatgpt_backend
 
 To access Django Admin, go to http://localhost:8090/admin/ and login with the superuser credentials you set in the [.env.dev](.envs/.env.dev) file
 
-### Access the Database Shell
+### 🐘 Access the Database Shell
 
 Sometimes you may want to access the Django database shell. You can do so by running the following command:
 
@@ -114,7 +116,7 @@ cd chatgpt_backend
 ```
 
 
-## Known Issues
+## 🐛 Known Issues
 
 If you get `Error: pg_config executable not found.` when running `pip install -r requirements.txt`, you must install  PostgreSQL development libraries on your system. 
 
@@ -131,6 +133,6 @@ sudo apt update
 sudo apt-get install libpq-dev python3-dev
 ```
 
-## License
+## 📄 License
 
 This project is licensed under the terms of the [MIT license](./LICENSE).
