@@ -1,8 +1,8 @@
-# Self Hosted ChatGPT Clone
+# 🤖 Self Hosted ChatGPT Clone
 
 ChatGPT Clone: Self Hosted, Full-Stack Conversational AI Platform powered by React, Django REST Framework, and PostgreSQL and OpenAI's GPT-3.5 API.
 
-## Features
+## 🚀 Features
 
 - **Self Hosted**: You can host the project on your own server or local machine. All the data and OpenAI API Key are stored on your server.
 - **Full-Stack**: The project is a full-stack project that includes a React frontend, Django REST Framework backend, and PostgreSQL database.
@@ -11,13 +11,13 @@ ChatGPT Clone: Self Hosted, Full-Stack Conversational AI Platform powered by Rea
 - **Django Admin Panel**: The project includes a Django Admin Panel to manage the project.
 
 
-## Prerequisites
+## 🛠 Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [OpenAI API Key](https://platform.openai.com/account/api-keys)
 
-## Quick Start
+## ⚡️ Quick Start
 
 You can quickly deploy ChatGPT Clone by running the following command. This script ask you for your OpenAI API Key. Your OpenAI API Key is only stored in your `.envs/.env` file and is never sent to any other server. Please check the [install.sh](./install.sh) file to see what it does.
 
