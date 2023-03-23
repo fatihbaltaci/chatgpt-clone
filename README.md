@@ -126,6 +126,24 @@ cd chatgpt_backend
 ./db_shell.sh
 ```
 
+## Frontend
+
+### Installation
+
+```bash
+cd chatgpt_frontend
+npm install
+```
+
+### Running
+
+You can update the `REACT_APP_BACKEND_URL` key in the [.env](chatgpt_frontend/.env) file with the URL of the backend server. Default value is `http://localhost:8090/api`. If your backend server is running on a different server or port, you must update this value. Do not forget to add `/api` at the end of the URL.
+
+```bash
+cd chatgpt_frontend
+npm start
+```
+
 
 ## 🐛 Known Issues
 
