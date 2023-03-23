@@ -65,11 +65,11 @@ docker-compose up -d
 
 ### 🌐 Access the Project
 
-The project will be available at http://localhost:3090/
+The project will be available at http://localhost:8090/
 
 ### 🧐 Access the Django Admin Panel
 
-The admin panel will be available at http://localhost:3090/admin/ and you can login with the superuser credentials you set in the [.envs/.env](.envs/.env) file.
+The admin panel will be available at http://localhost:8090/admin/ and you can login with the superuser credentials you set in the [.envs/.env](.envs/.env) file.
 
 ### 🧹 Clean Up
 
