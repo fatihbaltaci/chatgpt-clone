@@ -1,12 +1,21 @@
 version: '3.8'
 
 services:
+  nginx:
+    image: nginx:1.23.3-alpine
+    ports:
+      - '8090:80'
+    volumes:
+      - ./nginx_reverse_proxy/default_rp.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - chatgpt-network
   frontend:
     build:
       context: ./chatgpt_frontend
       dockerfile: Dockerfile
-    ports:
-      - '8091:80'
     depends_on:
       - backend
     networks:
@@ -16,8 +25,6 @@ services:
     build:
       context: ./chatgpt_backend
       dockerfile: Dockerfile
-    ports:
-      - '8090:8090'
     depends_on:
       - db
     env_file:

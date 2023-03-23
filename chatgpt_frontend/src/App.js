@@ -5,7 +5,7 @@ import "./App.css";
 import ChatHistory from "./components/ChatHistory";
 import ChatUI from "./components/ChatUI";
 
-const baseURL = "http://localhost:8090";
+const baseURL = "http://localhost:8090/api";
 
 function App() {
   const [chats, setChats] = useState([]);
@@ -37,7 +37,7 @@ function App() {
 
   const fetchChats = async () => {
     try {
-      const response = await axios.get(`${baseURL}/api/chats/`);
+      const response = await axios.get(`${baseURL}/chats/`);
       setChats(response.data);
     } catch (error) {
       console.error("Error fetching chats:", error);
@@ -46,7 +46,7 @@ function App() {
 
   const fetchMessages = async (chatId) => {
     try {
-      const response = await axios.get(`${baseURL}/api/chats/${chatId}/`);
+      const response = await axios.get(`${baseURL}/chats/${chatId}/`);
       setMessages(response.data);
     } catch (error) {
       console.error("Error fetching messages:", error);
@@ -71,7 +71,7 @@ function App() {
       const delay = 1000 + Math.random() * 1000; // Random delay between 1-2 seconds
       setTimeout(async () => {
         try {
-          const response = await axios.post(`${baseURL}/api/chats/`, {
+          const response = await axios.post(`${baseURL}/chats/`, {
             chat_id: selectedChatId || undefined,
             message: inputMessage,
           });
@@ -104,7 +104,7 @@ function App() {
 
   const createNewChat = async () => {
     try {
-      const response = await axios.post(`${baseURL}/api/chats/`);
+      const response = await axios.post(`${baseURL}/chats/`);
       const newChat = response.data;
 
       setChats([newChat, ...chats]);
