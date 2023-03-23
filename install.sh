@@ -80,16 +80,16 @@ echo "🚀 Deploying ChatGPT-clone..."
 $COMPOSE_COMMAND -f "$REPO_DIR/docker-compose.yml" up -d
 echo "✅ ChatGPT-clone installation complete! 🎉"
 echo "📁 Installation directory: $REPO_DIR"
-echo "🌐 Open http://localhost:8091 in your browser to access the application."
+echo "🌐 Open http://localhost:8090 in your browser to access the application."
 
 # Open browser to access the project
 echo "🌐 Opening the project in your browser..."
 if command -v open >/dev/null 2>&1; then
-  open "http://localhost:8091" >/dev/null 2>&1
+  open "http://localhost:8090" >/dev/null 2>&1
 elif command -v xdg-open >/dev/null 2>&1; then
-  xdg-open "http://localhost:8091" >/dev/null 2>&1
+  xdg-open "http://localhost:8090" >/dev/null 2>&1
 elif command -v gnome-open >/dev/null 2>&1; then
-  gnome-open "http://localhost:8091" >/dev/null 2>&1
+  gnome-open "http://localhost:8090" >/dev/null 2>&1
 elif command -v kde-open >/dev/null 2>&1; then
-  kde-open "http://localhost:8091" >/dev/null 2>&1
+  kde-open "http://localhost:8090" >/dev/null 2>&1
 fi
