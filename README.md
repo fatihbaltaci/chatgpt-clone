@@ -10,7 +10,7 @@ ChatGPT Clone: Self Hosted, Full-Stack Conversational AI Platform powered by Rea
 
 - [Features](#-features)
 - [Prerequisites](#-prerequisites)
-- [Quick Start](#-quick-start)
+- [Quick Start (Recommended)](#%EF%B8%8F-quick-start-recommended)
 - [Installation (Manual)](#-installation-manual)
 - [Development (Contributing)](#-development-contributing)
 - [Known Issues](#-known-issues)
@@ -33,7 +33,7 @@ ChatGPT Clone: Self Hosted, Full-Stack Conversational AI Platform powered by Rea
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [OpenAI API Key](https://platform.openai.com/account/api-keys)
 
-## ⚡️ Quick Start
+## ⚡️ Quick Start (Recommended)
 
 You can quickly deploy ChatGPT Clone by running the following command. This script ask you for your OpenAI API Key. Your OpenAI API Key is only stored in your `.envs/.env` file and is never sent to any other server. Please check the [install.sh](./install.sh) file to see what it does.
 
