@@ -26,7 +26,7 @@ REPO_DIR="$HOME/chatgpt-clone"
 
 # Check if repository already exists
 if [ -d "$REPO_DIR" ]; then
-  read -p "🔄 Repository already exists at $REPO_DIR. Clean and update? [Y/n]: " answer
+  read -p "🔄 Repository already exists at $REPO_DIR - Clean and update? [Y/n]: " answer
   answer=${answer:-Y}
   if [[ $answer =~ ^[Yy]$ ]]; then
     cd "$REPO_DIR"
@@ -39,7 +39,7 @@ if [ -d "$REPO_DIR" ]; then
   fi
 else
   # Clone the repository
-  echo "📦 Cloning repository to user home directory..."
+  echo "📦 Cloning repository to $REPO_DIR directory..."
   git clone git@github.com:fatihbaltaci/chatgpt-clone.git "$REPO_DIR" >/dev/null 2>&1
   cd "$REPO_DIR"
 fi
