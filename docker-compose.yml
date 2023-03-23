@@ -30,8 +30,10 @@ services:
     env_file:
       - .envs/.env
     command: >
-      bash -c "python manage.py makemigrations &&
+      bash -c "python manage.py create_superuser &&
+               python manage.py makemigrations &&
                python manage.py migrate &&
+               python manage.py collectstatic --noinput --clear --verbosity 0 &&
                gunicorn --bind 0.0.0.0:8090 chatgpt_backend.wsgi:application"
     networks:
       - chatgpt-network
