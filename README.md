@@ -9,6 +9,7 @@ ChatGPT Clone: Self Hosted, Full-Stack Conversational AI Platform powered by Rea
 - **Conversational AI**: The project uses OpenAI's GPT-3.5 API to generate responses to user inputs.
 - **Docker Compose**: The project uses Docker Compose to run the project in containers.
 - **Django Admin Panel**: The project includes a Django Admin Panel to manage the project.
+- **Supported OS**: The project is tested on Ubuntu and MacOS.
 
 
 ## 🛠 Prerequisites
