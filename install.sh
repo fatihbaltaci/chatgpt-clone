@@ -69,7 +69,7 @@ if $OPENAI_API_KEY_SET; then
 fi
 
 REACT_ENV_FILE=chatgpt_frontend/.env
-REACT_APP_BACKEND_URL="${REACT_APP_BACKEND_URL:-http://localhost:8090/api}"
+REACT_APP_BACKEND_URL=$(grep "REACT_APP_BACKEND_URL=" "$REACT_ENV_FILE" | cut -d '=' -f 2)
 
 # Ask the user if they want to change the backend URL
 read -p "Do you want to change the Backend URL? Current Backend URL: $REACT_APP_BACKEND_URL [y/N]: " change_url
