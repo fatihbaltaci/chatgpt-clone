@@ -59,6 +59,14 @@ if grep -q "OPENAI_API_KEY=" "$ENV_FILE"; then
   fi
 fi
 
+# Prompt user to input OpenAI API key if not set
+if $OPENAI_API_KEY_SET; then
+  read -p "🔑 Enter your OpenAI API Key: " OPENAI_API_KEY
+  # Update .env file
+  echo "🔧 Updating .env file..."
+  sed -i.bak "s/^OPENAI_API_KEY=.*$/OPENAI_API_KEY=${OPENAI_API_KEY}/" "$ENV_FILE" && rm "$ENV_FILE.bak"
+fi
+
 REACT_ENV_FILE=chatgpt_frontend/.env
 REACT_APP_BACKEND_URL="${REACT_APP_BACKEND_URL:-http://localhost:8090/api}"
 
@@ -73,15 +81,6 @@ if [[ $change_url =~ ^[Yy]$ ]]; then
   echo "🔧 Backend URL changed to $REACT_APP_BACKEND_URL"
 fi
 
-
-# Prompt user to input OpenAI API key if not set
-if $OPENAI_API_KEY_SET; then
-  read -p "🔑 Enter your OpenAI API Key: " OPENAI_API_KEY
-  # Update .env file
-  echo "🔧 Updating .env file..."
-  sed -i.bak "s/^OPENAI_API_KEY=.*$/OPENAI_API_KEY=${OPENAI_API_KEY}/" "$ENV_FILE" && rm "$ENV_FILE.bak"
-fi
-
 # Determine which compose command to use
 COMPOSE_COMMAND="docker-compose"
 if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1; then
@@ -92,7 +91,7 @@ fi
 echo "🛠 Building the project... (This may take up to 10 minutes based on your internet connection speed)"
 $COMPOSE_COMMAND -f "$REPO_DIR/docker-compose.yml" build >/dev/null 2>&1
 echo "🚀 Deploying ChatGPT-clone..."
-$COMPOSE_COMMAND -f "$REPO_DIR/docker-compose.yml" up -d
+$COMPOSE_COMMAND -f "$REPO_DIR/docker-compose.yml" up -d --build --force-recreate --remove-orphans
 echo "✅ ChatGPT-clone installation complete! 🎉"
 echo "📁 Installation directory: $REPO_DIR"
 echo "🌐 Open http://localhost:8090 in your browser to access the application."
