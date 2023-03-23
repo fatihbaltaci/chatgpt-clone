@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { FaGithub } from "react-icons/fa";
 
 import "./App.css";
 import ChatHistory from "./components/ChatHistory";
 import ChatUI from "./components/ChatUI";
 
-const baseURL = process.env.REACT_APP_BACKEND_URL || "http://localhost:8090/api";
+const baseURL =
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:8090/api";
 
 function App() {
   const [chats, setChats] = useState([]);
@@ -63,9 +65,9 @@ function App() {
       },
     ]);
     setInputMessage("");
-  
+
     setIsAssistantTyping(true);
-  
+
     try {
       // Simulate a delay for the typewriting effect
       const delay = 1000 + Math.random() * 1000; // Random delay between 1-2 seconds
@@ -75,7 +77,7 @@ function App() {
             chat_id: selectedChatId || undefined,
             message: inputMessage,
           });
-  
+
           // If there was no selected chat, set the selected chat to the newly created one
           if (!selectedChatId) {
             setSelectedChatId(response.data.chat_id);
@@ -88,7 +90,8 @@ function App() {
           setMessages([
             ...messages,
             {
-              content: "⚠️ An error occurred while sending the message. Please make sure the backend is running and OPENAI_API_KEY is set in the .env file.",
+              content:
+                "⚠️ An error occurred while sending the message. Please make sure the backend is running and OPENAI_API_KEY is set in the .env file.",
               role: "assistant",
             },
           ]);
@@ -100,7 +103,6 @@ function App() {
       console.error("Error sending message:", error);
     }
   };
-  
 
   const createNewChat = async () => {
     try {
@@ -140,7 +142,7 @@ function App() {
       <div className="chat-container">
         <div className="chat-history-container">
           <button className="new-chat-button" onClick={createNewChat}>
-            + New Chat
+            <strong>+ New Chat</strong>
           </button>
           <ChatHistory
             chats={chats}
@@ -157,6 +159,16 @@ function App() {
           isAssistantTyping={isAssistantTyping}
           messagesEndRef={messagesEndRef}
         />
+      </div>
+      <div className="footer">
+        <a
+          href="https://github.com/fatihbaltaci/chatgpt-clone"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaGithub className="icon" />
+          View on GitHub
+        </a>
       </div>
     </div>
   );

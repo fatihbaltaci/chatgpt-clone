@@ -1,5 +1,9 @@
 import React from "react";
 
+// import send icon from react-icons/fa
+import { FaPaperPlane } from "react-icons/fa";
+
+
 const ChatInput = ({ inputMessage, setInputMessage, sendMessage }) => {
   return (
     <div className="chat-input">
@@ -8,15 +12,17 @@ const ChatInput = ({ inputMessage, setInputMessage, sendMessage }) => {
         value={inputMessage}
         onChange={(e) => setInputMessage(e.target.value)}
         onKeyDown={(e) => {
-          if (e.keyCode === 13 && !e.shiftKey) {
+          if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
-            sendMessage();
-          }
+            if (inputMessage) {
+              sendMessage();
+            }
+          }          
         }}
       />
 
       <button onClick={sendMessage} disabled={!inputMessage}>
-        Send
+        <FaPaperPlane/>
       </button>
     </div>
   );
