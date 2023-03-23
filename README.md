@@ -6,6 +6,18 @@ ChatGPT Clone: Self Hosted, Full-Stack Conversational AI Platform powered by Rea
 <img src="assets/chatgpt_clone_overview.png" alt="ChatGPT Clone - It uses GPT-3.5 to generate responses to messages." />
 </p>
 
+## 📖 Table of Contents
+
+- [Features](#-features)
+- [Prerequisites](#-prerequisites)
+- [Quick Start (Recommended)](#-quick-start-recommended)
+- [Installation (Manual)](#-installation-manual)
+- [Development (Contributing)](#-development-contributing)
+- [Known Issues](#-known-issues)
+- [Troubleshooting and FAQ](#-troubleshooting-and-faq)
+- [Credits](#-credits)
+- [License](#-license)
+
 ## 🚀 Features
 
 - **Self Hosted**: You can host the project on your own server or local machine. All the data and OpenAI API Key are stored on your server.
@@ -165,3 +177,13 @@ sudo apt-get install libpq-dev python3-dev
 ## 📄 License
 
 This project is licensed under the terms of the [MIT license](./LICENSE).
+
+## 🙌 Credits
+
+- [OpenAI GPT-3.5](https://platform.openai.com/docs/models/gpt-3)
+- [Django](https://www.djangoproject.com/)
+- [Django REST Framework](https://www.django-rest-framework.org/)
+- [React](https://reactjs.org/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
