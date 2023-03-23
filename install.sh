@@ -74,7 +74,7 @@ if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1; 
 fi
 
 # Build and run the project
-echo "🛠 Building the project..."
+echo "🛠 Building the project... (This may take up to 10 minutes based on your internet connection speed)"
 $COMPOSE_COMMAND -f "$REPO_DIR/docker-compose.yml" build >/dev/null 2>&1
 echo "🚀 Deploying ChatGPT-clone..."
 $COMPOSE_COMMAND -f "$REPO_DIR/docker-compose.yml" up -d
