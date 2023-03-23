@@ -10,7 +10,7 @@ ChatGPT Clone: Self Hosted, Full-Stack Conversational AI Platform powered by Rea
 
 - [Features](#-features)
 - [Prerequisites](#-prerequisites)
-- [Quick Start (Recommended)](#-quick-start)
+- [Quick Start](#-quick-start)
 - [Installation (Manual)](#-installation-manual)
 - [Development (Contributing)](#-development-contributing)
 - [Known Issues](#-known-issues)
