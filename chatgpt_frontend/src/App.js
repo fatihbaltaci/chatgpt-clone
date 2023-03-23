@@ -5,7 +5,7 @@ import "./App.css";
 import ChatHistory from "./components/ChatHistory";
 import ChatUI from "./components/ChatUI";
 
-const baseURL = "http://localhost:8090/api";
+const baseURL = process.env.REACT_APP_BACKEND_URL || "http://localhost:8090/api";
 
 function App() {
   const [chats, setChats] = useState([]);

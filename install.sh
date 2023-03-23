@@ -59,6 +59,21 @@ if grep -q "OPENAI_API_KEY=" "$ENV_FILE"; then
   fi
 fi
 
+REACT_ENV_FILE=chatgpt_frontend/.env
+REACT_APP_BACKEND_URL="${REACT_APP_BACKEND_URL:-http://localhost:8090/api}"
+
+# Ask the user if they want to change the backend URL
+read -p "Do you want to change the Backend URL? Current Backend URL: $REACT_APP_BACKEND_URL [y/N]: " change_url
+change_url=${change_url:-N}
+
+if [[ $change_url =~ ^[Yy]$ ]]; then
+  read -p "Enter the new Backend URL e.g https://chat.yourdomain.com/api: " new_url
+  REACT_APP_BACKEND_URL="${new_url}"
+  sed -i.bak "s|^REACT_APP_BACKEND_URL=.*$|REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL}|" "$REACT_ENV_FILE" && rm "$REACT_ENV_FILE.bak"
+  echo "🔧 Backend URL changed to $REACT_APP_BACKEND_URL"
+fi
+
+
 # Prompt user to input OpenAI API key if not set
 if $OPENAI_API_KEY_SET; then
   read -p "🔑 Enter your OpenAI API Key: " OPENAI_API_KEY
