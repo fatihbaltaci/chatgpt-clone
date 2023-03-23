@@ -45,7 +45,6 @@ else
 fi
 
 # Update .env file
-echo "🔧 Updating .env file..."
 ENV_FILE=".envs/.env"
 
 # Check if OPENAI_API_KEY is set
@@ -63,7 +62,6 @@ fi
 if $OPENAI_API_KEY_SET; then
   read -p "🔑 Enter your OpenAI API Key: " OPENAI_API_KEY
   # Update .env file
-  echo "🔧 Updating .env file..."
   sed -i.bak "s/^OPENAI_API_KEY=.*$/OPENAI_API_KEY=${OPENAI_API_KEY}/" "$ENV_FILE" && rm "$ENV_FILE.bak"
 fi
 
