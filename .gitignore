@@ -127,5 +127,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+chatgpt_backend/api/static
 chatgpt_backend/static
 .DS_Store
