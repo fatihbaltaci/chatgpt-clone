@@ -40,7 +40,7 @@ if [ -d "$REPO_DIR" ]; then
 else
   # Clone the repository
   echo "📦 Cloning repository to $REPO_DIR directory..."
-  git clone git@github.com:fatihbaltaci/chatgpt-clone.git "$REPO_DIR" >/dev/null 2>&1
+  git clone https://github.com/fatihbaltaci/chatgpt-clone.git "$REPO_DIR" >/dev/null 2>&1
   cd "$REPO_DIR"
 fi
 
