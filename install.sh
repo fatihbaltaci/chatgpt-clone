@@ -26,16 +26,19 @@ REPO_DIR="$HOME/chatgpt-clone"
 
 # Check if repository already exists
 if [ -d "$REPO_DIR" ]; then
-  read -p "🔄 Repository already exists at $REPO_DIR - Clean and update? [Y/n]: " answer
-  answer=${answer:-Y}
-  if [[ $answer =~ ^[Yy]$ ]]; then
-    cd "$REPO_DIR"
-    git reset --hard >/dev/null 2>&1
-    git clean -fd >/dev/null 2>&1
-    git pull >/dev/null 2>&1
-  else
-    echo "Skipping repository update."
-    cd "$REPO_DIR"
+  echo "🔄 Repository already exists at $REPO_DIR - Attempting to update..."
+  cd "$REPO_DIR"
+  git pull >/dev/null 2>&1
+
+  # Check for errors during pull
+  if [ $? -ne 0 ]; then
+    read -p "⚠️ Error updating repository. Clean and update? [Y/n]: " answer
+    answer=${answer:-Y}
+    if [[ $answer =~ ^[Yy]$ ]]; then
+      git reset --hard >/dev/null 2>&1
+      git clean -fd >/dev/null 2>&1
+      git pull >/dev/null 2>&1
+    fi
   fi
 else
   # Clone the repository
