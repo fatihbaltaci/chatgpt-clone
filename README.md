@@ -3,7 +3,7 @@
 ChatGPT Clone: Self Hosted, Full-Stack Conversational AI Platform powered by React, Django REST Framework, and PostgreSQL and OpenAI's GPT-3.5 API. Most of the code is written by [GPT-4 model](https://openai.com/product/gpt-4). 
 
 <p align="center">
-<img src="assets/chatgpt_clone_overview.png" alt="ChatGPT Clone - It uses GPT-3.5 to generate responses to messages." />
+<img src="https://raw.githubusercontent.com/fatihbaltaci/chatgpt-clone/main/assets/chatgpt_clone_overview.png" alt="ChatGPT Clone - It uses GPT-3.5 to generate responses to messages." />
 </p>
 
 ## 📖 Table of Contents
