@@ -78,7 +78,7 @@
 .message {
   margin-bottom: 8px;
   padding: 8px;
-  max-width: 60%;
+  max-width: 90%;
 }
 
 .message.user {
@@ -140,7 +140,7 @@
   border-radius: 4px;
   padding: 1rem;
   font-family: monospace;
-  white-space: pre-wrap;
+  overflow: auto;
 }
 
 .inline-code {
@@ -218,4 +218,47 @@
 
 .footer .icon {
   margin-right: 5px;
+}
+
+/* Add this media query */
+@media screen and (max-width: 768px) {
+  .App {
+    flex-direction: column;
+  }
+  
+  .headline {
+    padding: 0.5rem;
+  }
+  
+  .headline h1 {
+    font-size: 1.2rem;
+  }
+  
+  .chat-container {
+    flex-direction: column;
+    width: 100%;
+    height: calc(100% - 50px); /* Adjust the height to account for the headline */
+    box-shadow: none;
+  }
+  
+  .chat-history-container {
+    width: 100%;
+    height: 20%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+    margin-top: 0.8rem;
+  }
+  
+  .chat-ui {
+    width: 100%;
+    height: 70%;
+  }
+  
+  .chat-input {
+    padding: 0.5rem;
+  }
+  
+  .chat-input button {
+    padding: 0.5rem 1rem;
+  }
 }
